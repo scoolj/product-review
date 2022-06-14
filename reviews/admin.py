@@ -3,7 +3,16 @@ from .models import Company, Product, Category, ProductSize, ProductSite, Commen
 from django.contrib.auth.models import Group
 # Register your models here.
 
-admin.site.register(Product)
+# admin.register() decorator
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name', 'content',)
+    list_filter = ('category',)
+
+
+#admin.site.register(Product, ProductAdmin) <- admin.site.register method
+
+# admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(Company)
 admin.site.register(ProductSize)
