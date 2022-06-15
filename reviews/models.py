@@ -1,8 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
+from versatileimagefield.fields import VersatileImageField,PPOIField
 # Create your models here.
+
+class Image(models.Model):
+    name = models.CharField(max_length=255)
+    image = VersatileImageField(
+        'Image',
+        upload_to='images/',
+        ppoi_field = 'image_ppoi'
+    )
+
+    image_ppoi = PPOIField()
+
+    def __str__(self):
+        return self.name
+
 
 class Company(models.Model):
     name = models.CharField(max_length=225)
@@ -32,6 +45,7 @@ class Product(models.Model):
     category = models.ManyToManyField(Category, related_name='products')
     created = models.DateField(auto_now_add = True)
     updated = models.DateField(auto_now = True)
+    image =models.ManyToManyField('reviews.Image', related_name='product')
 
 
     class Meta:

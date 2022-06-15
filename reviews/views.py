@@ -1,13 +1,18 @@
-from .serializers import ProductSerializer
+from .models import Image
+from .serializers import ImageSerializer, ProductSerializer
 from .models import Product
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_flex_fields.views import FlexFieldsMixin
+from rest_flex_fields.views import FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
 
 
 
 # Create your views here.
 
+class ImageViewSet(FlexFieldsModelViewSet):
+
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
 
 class ProductViewSet(ReadOnlyModelViewSet):
 
