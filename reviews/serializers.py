@@ -5,19 +5,9 @@ from .models import Category, Company, Product, ProductSite, ProductSize
 from django.contrib.auth.models import User
 from .models import Image
 from versatileimagefield.serializers import VersatileImageFieldSerializer
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-
-        # Add custoome claims
-
-        token['username'] = user.username
-        return token
+ 
 
 
 class ImageSerializer(FlexFieldsModelSerializer):
