@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,12 +43,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'versatileimagefield',
-    'reviews'
+    'reviews',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -131,7 +134,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'], 
+
+    'DEFAULT_AUTHENTICATION_CLASSES' :[
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
 }
 
 MEDIA_URL ='/media/'
@@ -145,3 +152,20 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS ={
         ('small_square_crop', 'crop__50x50')
     ]
 }
+
+CORS_ALLOWED_ORIGINS = [
+
+    "https://www.test-cors.org",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+     "https://www.test-cors.org",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'ROTATE_REFRESH_TOKEN': True,
+}
+ 

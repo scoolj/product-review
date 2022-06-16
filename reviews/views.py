@@ -4,10 +4,25 @@ from .models import Product
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_flex_fields.views import FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import AllowAny
+from .serializers import MyTokenObtainPairSerializer
 
 
 # Create your views here.
+
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = (AllowAny, )
+    serializer_class = MyTokenObtainPairSerializer
+
+
+class ImageViewSet(FlexFieldsModelViewSet):
+
+    serializer_class =ImageSerializer
+    queryset = Image.objects.all()
+    permission_classes = [IsAuthenticated]
+
 
 class ImageViewSet(FlexFieldsModelViewSet):
 
